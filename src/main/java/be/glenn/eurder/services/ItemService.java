@@ -39,7 +39,9 @@ public class ItemService {
         if (!dto.allInputIsValid()) {
             throw new IllegalArgumentException("Not all necessary information to update a new item was provided");
         }
-
+        if (!repo.contains(mapper.updateDtoToItem(dto))) {
+            throw new IllegalArgumentException("The item you want to update is not yet stored in our database");
+        }
         return repo.add(mapper.updateDtoToItem(dto));
     }
 }

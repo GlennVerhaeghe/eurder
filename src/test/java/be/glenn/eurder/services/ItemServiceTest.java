@@ -79,12 +79,22 @@ class ItemServiceTest {
 
         @Test
         void updateItemOnANonExistingItemThrowsException() {
-
+            //given
+            UpdateItemDto dto = new UpdateItemDto("012", "A", "B", 10, 5);
+            //then
+            assertThrows(IllegalArgumentException.class, () -> service.updateItem(dto, "666"));
         }
 
         @Test
         void updateItemWithAllValidInputsWorks() {
-
+            //given
+            Item item = new Item().setName("A").setDescription("B").setPrice(20).setAmount(50);
+            UpdateItemDto dto = new UpdateItemDto(item.getId(), "A", "B", 10, 5);
+            //when
+            repo.add(item);
+            service.updateItem(dto, "666");
+            //then
+            assertEquals(repo.get(item.getId()), mapper.updateDtoToItem(dto));
         }
     }
 

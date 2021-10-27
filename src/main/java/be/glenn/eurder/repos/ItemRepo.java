@@ -22,6 +22,10 @@ public class ItemRepo {
         return item;
     }
 
+    public Item get(String itemId) {
+        return repo.get(itemId);
+    }
+
     public boolean contains(Item item) {
         return repo.containsValue(item);
     }
