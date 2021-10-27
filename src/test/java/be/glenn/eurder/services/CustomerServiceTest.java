@@ -30,9 +30,8 @@ class CustomerServiceTest {
         //given
         CreateCustomerDto dto = new CreateCustomerDto("Tom", "Hanks", "forrest@gump.com",
                 new Address("SomeStreet", "25", "45896", "SomeCity"), "123456789");
-        Customer customer = mapper.createDtoToCustomer(dto);
         //when
-        service.createCustomer(dto);
+        Customer customer = service.createCustomer(dto);
         //then
         assertTrue(repo.contains(customer));
     }
@@ -42,7 +41,6 @@ class CustomerServiceTest {
         //given
         CreateCustomerDto dto = new CreateCustomerDto(null, "Hanks", "forrest@gump.com",
                 new Address("SomeStreet", "25", "45896", "SomeCity"), "123456789");
-        Customer customer = mapper.createDtoToCustomer(dto);
         // then
         assertThrows(IllegalArgumentException.class, () -> service.createCustomer(dto));
     }

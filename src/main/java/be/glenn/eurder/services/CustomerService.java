@@ -21,8 +21,7 @@ public class CustomerService {
 
     public Customer createCustomer(CreateCustomerDto dto) {
         if(dto.allInputIsValid()) {
-            repo.add(mapper.createDtoToCustomer(dto));
-            return mapper.createDtoToCustomer(dto);
+            return repo.add(mapper.createDtoToCustomer(dto));
         }
 
         throw new IllegalArgumentException("Not all necessary information to create a new customer was provided");

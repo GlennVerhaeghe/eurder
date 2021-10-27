@@ -16,11 +16,15 @@ public class CustomerRepo {
         this.repo = new ConcurrentHashMap<>();
     }
 
-    public void add(Customer customer) {
+    public Customer add(Customer customer) {
         repo.put(customer.getId(), customer);
+        return customer;
     }
 
     public boolean contains(Customer customer) {
+        if(customer == null) {
+            throw new IllegalArgumentException("Can't check for non-existing customers");
+        }
         return repo.containsValue(customer);
     }
 }

@@ -2,9 +2,10 @@ package be.glenn.eurder.mappers;
 
 import be.glenn.eurder.domain.Customer;
 import be.glenn.eurder.domain.dtos.CreateCustomerDto;
-import org.springframework.stereotype.Component;
+import be.glenn.eurder.domain.dtos.CustomerDto;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class CustomerMapper {
 
     public Customer createDtoToCustomer(CreateCustomerDto dto) {
@@ -13,5 +14,17 @@ public class CustomerMapper {
                 .setEmail(dto.getEmail())
                 .setAddress(dto.getAddress())
                 .setPhoneNumber(dto.getPhoneNumber());
+    }
+
+    public CustomerDto customerToDto(Customer customer) {
+        return new CustomerDto(customer.getFirstName(),
+                customer.getLastName(),
+                customer.getEmail(),
+                customer.getAddress(),
+                customer.getPhoneNumber());
+    }
+
+    public CustomerDto createDtoToDto(CreateCustomerDto dto) {
+        return customerToDto(createDtoToCustomer(dto));
     }
 }
