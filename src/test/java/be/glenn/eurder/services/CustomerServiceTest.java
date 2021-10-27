@@ -38,7 +38,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void createCustomerWithInvalidDataDoesNotResultInTheCreationOfACustomer() {
+    void createCustomerWithInvalidDataDoesNotResultInTheCreationOfACustomerButThrowsException() {
         //given
         CreateCustomerDto dto = new CreateCustomerDto(null, "Hanks", "forrest@gump.com",
                 new Address("SomeStreet", "25", "45896", "SomeCity"), "123456789");
