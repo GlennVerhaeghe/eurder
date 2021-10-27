@@ -54,7 +54,7 @@ class CustomerServiceTest {
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
-    class GetCustomerTesting {
+    class GetAllCustomersTesting {
 
         @Test
         void whenRepositoryIsEmptyGetAllCustomersThrowsException() {
@@ -72,18 +72,70 @@ class CustomerServiceTest {
         void whenTwoCustomersAreRegisteredGetAllCustomersReturnsAListOfTwoCustomer() {
             //given
             Address address = new Address("SomeStreet", "25", "45896", "SomeCity");
-            CreateCustomerDto dto1 = new CreateCustomerDto("Tom", "Hanks", "forrest@gump.com",
-                    address, "123456789");
-            CreateCustomerDto dto2 = new CreateCustomerDto("Jack", "Daniels", "very@drunk.com",
-                    address, "234567890");
+            Customer customer1 = new Customer().setFirstName("Tom")
+                    .setLastName("B")
+                    .setEmail("a@b.cd")
+                    .setAddress(address)
+                    .setPhoneNumber("12345");
+            Customer customer2 = new Customer().setFirstName("Jack")
+                    .setLastName("B")
+                    .setEmail("a@b.cd")
+                    .setAddress(address)
+                    .setPhoneNumber("12345");
             //when
-            service.createCustomer(dto1);
-            service.createCustomer(dto2);
+            repo.add(customer1);
+            repo.add(customer2);
             List<Customer> values = service.getAllCustomers("666");
             //then
             assertTrue(values.get(0).getFirstName().equals("Tom") || values.get(0).getFirstName().equals("Jack"));
             assertTrue(values.get(1).getFirstName().equals("Tom") || values.get(1).getFirstName().equals("Jack"));
             assertThrows(IndexOutOfBoundsException.class, () -> values.get(2));
+        }
+    }
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @Nested
+    class getCustomerByIdTesting {
+
+        @Test
+        void whenUserWithoutAuthorisationTriesToGetCustomerThrowsAuthorisationException() {
+            //then
+            assertThrows(AuthorisationException.class, () -> service.getCustomer("555", "wrong id"));
+        }
+
+        @Test
+        void whenRepositoryIsEmptyGetCustomerThrowsException() {
+            //then
+            assertThrows(EmptyCollectionException.class, () -> service.getCustomer("555", "666"));
+        }
+
+        @Test
+        void whenUserDoesNotExistInOurDatabaseGetCustomerThrowsException() {
+            //given
+            Address address = new Address("SomeStreet", "25", "45896", "SomeCity");
+            Customer customer = new Customer().setFirstName("Tom")
+                    .setLastName("B")
+                    .setEmail("a@b.cd")
+                    .setAddress(address)
+                    .setPhoneNumber("12345");
+            //when
+            repo.add(customer);
+            //then
+            assertThrows(IllegalArgumentException.class, () -> service.getCustomer("123", "666"));
+        }
+
+        @Test
+        void whenACustomerIsStoredInOurDatabaseGetCustomerReturnsThatUser() {
+            //given
+            Address address = new Address("SomeStreet", "25", "45896", "SomeCity");
+            Customer customer = new Customer().setFirstName("Tom")
+                    .setLastName("B")
+                    .setEmail("a@b.cd")
+                    .setAddress(address)
+                    .setPhoneNumber("12345");
+            //when
+            repo.add(customer);
+            //then
+            assertEquals(customer, service.getCustomer(customer.getId(), "666"));
         }
     }
 }

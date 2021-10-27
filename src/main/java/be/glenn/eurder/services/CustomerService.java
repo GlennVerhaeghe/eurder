@@ -34,11 +34,24 @@ public class CustomerService {
 
     public List<Customer> getAllCustomers(String id) {
         if (!AdminValidator.isAdmin(id)) {
-            throw new AuthorisationException("Only the admin can view the customer list");
+            throw new AuthorisationException("Only the admin can view customer details");
         }
         if(repo.getRepo().size() == 0) {
             throw new EmptyCollectionException("We don't have any customers yet");
         }
         return new ArrayList<>(repo.getRepo().values());
+    }
+
+    public Customer getCustomer(String customerId, String validationId) {
+        if(!AdminValidator.isAdmin(validationId)) {
+            throw new AuthorisationException("Only the admin can view the details of a customer");
+        }
+        if (repo.getRepo().size() == 0) {
+            throw new EmptyCollectionException("We don't have any customers yet");
+        }
+        if (!repo.getRepo().containsKey(customerId)) {
+            throw new IllegalArgumentException("No customer with that ID is registered");
+        }
+        return repo.get(customerId);
     }
 }
