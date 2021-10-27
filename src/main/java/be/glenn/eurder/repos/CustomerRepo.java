@@ -27,4 +27,8 @@ public class CustomerRepo {
         }
         return repo.containsValue(customer);
     }
+
+    public Map<String, Customer> getRepo() {
+        return repo;
+    }
 }

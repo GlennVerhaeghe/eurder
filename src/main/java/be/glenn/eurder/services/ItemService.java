@@ -20,7 +20,6 @@ public class ItemService {
         this.mapper = mapper;
     }
 
-
     public Item createItem(CreateItemDto dto, String id) {
         if (!AdminValidator.isAdmin(id)) {
             throw new AuthorisationException("A user without admin rights tried to add an item");
