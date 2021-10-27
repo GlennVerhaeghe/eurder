@@ -3,6 +3,7 @@ package be.glenn.eurder.mappers;
 import be.glenn.eurder.domain.Item;
 import be.glenn.eurder.domain.dtos.CreateItemDto;
 import be.glenn.eurder.domain.dtos.ItemDto;
+import be.glenn.eurder.domain.dtos.UpdateItemDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -70,6 +71,20 @@ class ItemMapperTest {
         ItemDto dto = new ItemDto("123", "A", "B", 10, 5);
         //when
         Item item = mapper.dtoToItem(dto);
+        //then
+        assertEquals(dto.getId(), item.getId());
+        assertEquals(dto.getName(), item.getName());
+        assertEquals(dto.getDescription(), item.getDescription());
+        assertEquals(dto.getPrice(), item.getPrice());
+        assertEquals(dto.getAmount(), item.getAmount());
+    }
+
+    @Test
+    void updateDtoToItemWorks() {
+        //given
+        UpdateItemDto dto = new UpdateItemDto("12345", "A", "B", 10, 5);
+        //when
+        Item item = mapper.updateDtoToItem(dto);
         //then
         assertEquals(dto.getId(), item.getId());
         assertEquals(dto.getName(), item.getName());
