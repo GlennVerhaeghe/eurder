@@ -14,6 +14,7 @@ class AddressTest {
         assertTrue(address.allInputIsValid());
     }
 
+    @Test
     void givenAnIncompleteAddressTheAddressIsInvalid() {
         //given
         Address address = new Address(null, "253", "1000", "Bxl");

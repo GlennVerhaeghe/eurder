@@ -19,6 +19,14 @@ public class ItemGroup {
         return itemDto;
     }
 
+    public LocalDate getShippingDate() {
+        return shippingDate;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
     public void setShippingDate(LocalDate shippingDate) {
         this.shippingDate = shippingDate;
     }

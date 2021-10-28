@@ -29,4 +29,6 @@ public class ItemRepo {
     public boolean contains(Item item) {
         return repo.containsValue(item);
     }
+
+    public boolean containsKey(String itemId) { return repo.containsKey(itemId);}
 }
