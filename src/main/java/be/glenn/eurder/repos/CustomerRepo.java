@@ -30,6 +30,13 @@ public class CustomerRepo {
         return repo.containsValue(customer);
     }
 
+    public boolean containsKey(String customerId) {
+        if(customerId == null) {
+            throw new IllegalArgumentException("Can't check for non-existing customers");
+        }
+        return repo.containsKey(customerId);
+    }
+
     public Customer get(String customerId) {
         return repo.get(customerId);
     }

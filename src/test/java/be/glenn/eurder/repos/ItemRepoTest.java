@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ItemRepoTest {
 
-    ItemRepo repo = new ItemRepo();
+    private final ItemRepo repo = new ItemRepo();
 
     @Test
     void addMethodAndContainsMethodWork() {
