@@ -3,6 +3,7 @@ package be.glenn.eurder.services;
 import be.glenn.eurder.domain.*;
 import be.glenn.eurder.domain.dtos.CreateItemGroupDto;
 import be.glenn.eurder.domain.dtos.CreateOrderDto;
+import be.glenn.eurder.mappers.ItemGroupMapper;
 import be.glenn.eurder.mappers.OrderMapper;
 import be.glenn.eurder.repos.CustomerRepo;
 import be.glenn.eurder.repos.ItemRepo;
@@ -11,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -21,14 +19,16 @@ public class OrderService {
     private final OrderRepo orderRepo;
     private final CustomerRepo customerRepo;
     private final ItemRepo itemRepo;
-    private final OrderMapper mapper;
+    private final OrderMapper orderMapper;
+    private final ItemGroupMapper itemGroupMapper;
 
     @Autowired
-    public OrderService(OrderRepo orderRepo, CustomerRepo customerRepo, ItemRepo itemRepo, OrderMapper mapper) {
+    public OrderService(OrderRepo orderRepo, CustomerRepo customerRepo, ItemRepo itemRepo, OrderMapper orderMapper, ItemGroupMapper itemGroupMapper) {
         this.orderRepo = orderRepo;
         this.customerRepo = customerRepo;
         this.itemRepo = itemRepo;
-        this.mapper = mapper;
+        this.orderMapper = orderMapper;
+        this.itemGroupMapper = itemGroupMapper;
     }
 
     public Order createOrder(CreateOrderDto dto) {
@@ -41,7 +41,7 @@ public class OrderService {
         if (!allItemsAreInTheShop(dto)) {
             throw new IllegalArgumentException("We don't sell some of the items you want to buy");
         }
-        Order order = mapper.createOrderDtoToOrder(dto);
+        Order order = orderMapper.createOrderDtoToOrder(dto);
         calculateAndSetTotalPriceForItemGroups(order);
         calculateAndSetTotalPriceForOrder(order);
         calculateAndSetShippingDates(order);
@@ -66,5 +66,11 @@ public class OrderService {
         order.getOrderedItems()
                 .forEach(itemGroup ->
                         itemGroup.setShippingDate(itemGroup.getAmount() <= itemRepo.get(itemGroup.getItemId()).getAmount() ? LocalDate.now().plusDays(1) : LocalDate.now().plusDays(7)));
+    }
+
+    public Order reOrder(String orderId) {
+        Order order = orderRepo.get(orderId);
+        CreateOrderDto newOrder = new CreateOrderDto(order.getCustomerId(), itemGroupMapper.itemGroupListToCreateItemGroupDtoList(order.getOrderedItems()));
+        return createOrder(newOrder);
     }
 }

@@ -34,4 +34,8 @@ public class OrderRepo {
     public List<Order> getAllOrders() {
         return repo.values().stream().toList();
     }
+
+    public Order get(String orderId) {
+        return repo.get(orderId);
+    }
 }

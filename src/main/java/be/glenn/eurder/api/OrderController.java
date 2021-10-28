@@ -24,4 +24,8 @@ public class OrderController {
     public Order createOrder(@RequestBody CreateOrderDto dto) {
         return service.createOrder(dto);
     }
+
+    @PostMapping(produces = "application/json", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Order reOrder(@RequestBody String orderId) { return service.reOrder(orderId); }
 }

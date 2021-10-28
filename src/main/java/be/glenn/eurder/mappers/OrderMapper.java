@@ -12,4 +12,8 @@ public class OrderMapper {
     public Order createOrderDtoToOrder(CreateOrderDto dto) {
         return new Order(dto.getCustomerId(), itemGroupMapper.createDtoListToItemGroupList(dto.getOrderedItems()));
     }
+
+    public CreateOrderDto orderToCreateOrderDto(Order order) {
+        return new CreateOrderDto(order.getCustomerId(), itemGroupMapper.itemGroupListToCreateItemGroupDtoList(order.getOrderedItems()));
+    }
 }

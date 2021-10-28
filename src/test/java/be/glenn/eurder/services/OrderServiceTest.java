@@ -4,6 +4,7 @@ import be.glenn.eurder.domain.*;
 import be.glenn.eurder.domain.dtos.CreateItemGroupDto;
 import be.glenn.eurder.domain.dtos.CreateOrderDto;
 import be.glenn.eurder.domain.dtos.ItemDto;
+import be.glenn.eurder.mappers.ItemGroupMapper;
 import be.glenn.eurder.mappers.OrderMapper;
 import be.glenn.eurder.repos.CustomerRepo;
 import be.glenn.eurder.repos.ItemRepo;
@@ -26,6 +27,7 @@ class OrderServiceTest {
     private CustomerRepo customerRepo;
     private ItemRepo itemRepo;
     private OrderService service;
+    private ItemGroupMapper itemGroupMapper;
 
     private Address address;
     private Customer customer;
@@ -40,7 +42,9 @@ class OrderServiceTest {
         orderRepo = new OrderRepo();
         customerRepo = new CustomerRepo();
         itemRepo = new ItemRepo();
-        service = new OrderService(orderRepo, customerRepo, itemRepo, mapper);
+        itemGroupMapper = new ItemGroupMapper();
+
+        service = new OrderService(orderRepo, customerRepo, itemRepo, mapper, itemGroupMapper);
         address = new Address("Street", "25", "1000", "Bxl");
         customer = new Customer().setFirstName("A")
                 .setLastName("B")
