@@ -18,7 +18,7 @@ class CreateOrderDtoTest {
             .setEmail("a@b.com")
             .setPhoneNumber("012345678");
     private final ItemDto dto = new ItemDto("123", "A", "V", 10, 250);
-    private final ItemGroup itemGroup = new ItemGroup(dto, 5);
+    private final CreateItemGroupDto itemGroup = new CreateItemGroupDto(dto.getId(), 5);
 
     @Test
     void givenNoOrderedItemsAnOrderIsInvalid() {
@@ -31,7 +31,7 @@ class CreateOrderDtoTest {
     @Test
     void givenNoCustomerIdAnOrderIsInvalid() {
         //given
-        List<ItemGroup> itemGroups = List.of(itemGroup);
+        List<CreateItemGroupDto> itemGroups = List.of(itemGroup);
         CreateOrderDto dto = new CreateOrderDto(null, itemGroups);
         //then
         assertFalse(dto.allInputIsValid());
@@ -40,7 +40,7 @@ class CreateOrderDtoTest {
     @Test
     void givenValidInputACreateOrderDtoIsValid() {
         //given
-        List<ItemGroup> itemGroups = List.of(itemGroup);
+        List<CreateItemGroupDto> itemGroups = List.of(itemGroup);
         CreateOrderDto dto = new CreateOrderDto(customer.getId(), itemGroups);
         //then
         assertTrue(dto.allInputIsValid());

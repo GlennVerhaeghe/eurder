@@ -1,6 +1,7 @@
 package be.glenn.eurder.services;
 
 import be.glenn.eurder.domain.*;
+import be.glenn.eurder.domain.dtos.CreateItemGroupDto;
 import be.glenn.eurder.domain.dtos.CreateOrderDto;
 import be.glenn.eurder.domain.dtos.ItemDto;
 import be.glenn.eurder.mappers.OrderMapper;
@@ -29,7 +30,7 @@ class OrderServiceTest {
     private Address address;
     private Customer customer;
     private ItemDto itemDto;
-    private List<ItemGroup> itemGroups;
+    private List<CreateItemGroupDto> itemGroups;
     private CreateOrderDto createOrderDto;
     private Item item;
 
@@ -47,7 +48,7 @@ class OrderServiceTest {
                 .setEmail("a@b.com")
                 .setPhoneNumber("012345678");
         itemDto = new ItemDto("123", "A", "V", 10.0, 25);
-        itemGroups = List.of(new ItemGroup(itemDto, 5));
+        itemGroups = List.of(new CreateItemGroupDto(itemDto.getId(), 5));
         createOrderDto = new CreateOrderDto(customer.getId(), itemGroups);
         item = new Item("123", "A", "V", 10.0, 200);
     }
@@ -83,8 +84,9 @@ class OrderServiceTest {
         @Test
         void ifNotSufficientStockShippingDateGetsSetTo7DaysFromNow() {
             //when
-            itemDto = new ItemDto("123", "A", "V", 10.0, 25);
+            itemGroups = List.of(new CreateItemGroupDto(itemDto.getId(), 25));
             item = new Item("123", "A", "V", 10.0, 20);
+            createOrderDto = new CreateOrderDto(customer.getId(), itemGroups);
             //when
             itemRepo.add(item);
             customerRepo.add(customer);

@@ -6,10 +6,7 @@ import be.glenn.eurder.domain.dtos.CreateOrderDto;
 import be.glenn.eurder.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/orders")
@@ -24,8 +21,7 @@ public class OrderController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Order createOrder(CreateOrderDto dto) {
+    public Order createOrder(@RequestBody CreateOrderDto dto) {
         return service.createOrder(dto);
     }
-
 }

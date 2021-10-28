@@ -1,7 +1,5 @@
 package be.glenn.eurder.domain;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,20 +14,20 @@ public class Order {
         this.id = UUID.randomUUID().toString();
         this.customerId = customerId;
         this.orderedItems = orderedItems;
-        this.totalPrice = calculateOrderPrice();
-    }
-
-    public double calculateOrderPrice() {
-        return orderedItems.stream()
-                .map(ItemGroup::getItemDto)
-                .mapToDouble(dto -> dto.getAmount() * dto.getPrice())
-                .sum();
     }
 
     public boolean allInputIsValid() {
         return customerId != null
                 && orderedItems != null
                 && orderedItems.size() > 0;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public String getId() {
@@ -42,5 +40,11 @@ public class Order {
 
     public List<ItemGroup> getOrderedItems() {
         return orderedItems;
+    }
+
+    public double calculateTotalPrice() {
+        return orderedItems.stream()
+                .mapToDouble(ItemGroup::getTotalPrice)
+                .sum();
     }
 }

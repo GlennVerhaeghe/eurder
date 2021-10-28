@@ -1,5 +1,6 @@
 package be.glenn.eurder.repos;
 
+import be.glenn.eurder.domain.Address;
 import be.glenn.eurder.domain.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,10 +13,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class CustomerRepo {
     private final Map<String, Customer> repo;
+    private final Customer dummy;
 
     @Autowired
     public CustomerRepo() {
         this.repo = new ConcurrentHashMap<>();
+        dummy = new Customer().setFirstName("Dum").setLastName("My").setEmail("d@a.vv").setAddress(new Address("s","t","u","v")).setPhoneNumber("1245");
+        repo.put(dummy.getId(), dummy);
     }
 
     public Customer add(Customer customer) {

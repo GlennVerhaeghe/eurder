@@ -1,22 +1,21 @@
 package be.glenn.eurder.domain;
 
-import be.glenn.eurder.domain.dtos.ItemDto;
-
 import java.time.LocalDate;
 
 public class ItemGroup {
 
-    private final ItemDto itemDto;
+    private final String itemId;
     private final int amount;
     private LocalDate shippingDate;
+    private double totalPrice;
 
-    public ItemGroup(ItemDto itemDto, int amount) {
-        this.itemDto = itemDto;
+    public ItemGroup(String itemId, int amount) {
+        this.itemId = itemId;
         this.amount = amount;
     }
 
-    public ItemDto getItemDto() {
-        return itemDto;
+    public String getItemId() {
+        return itemId;
     }
 
     public LocalDate getShippingDate() {
@@ -25,6 +24,14 @@ public class ItemGroup {
 
     public int getAmount() {
         return amount;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public void setShippingDate(LocalDate shippingDate) {

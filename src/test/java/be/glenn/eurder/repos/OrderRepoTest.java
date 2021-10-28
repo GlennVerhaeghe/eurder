@@ -25,7 +25,7 @@ class OrderRepoTest {
                 .setEmail("a@b.com")
                 .setPhoneNumber("012345678");
         ItemDto dto = new ItemDto("123", "A", "V", 10, 250);
-        ItemGroup itemGroup = new ItemGroup(dto, 5);
+        ItemGroup itemGroup = new ItemGroup(dto.getId(), 5);
         List<ItemGroup> itemGroups = List.of(itemGroup);
         Order order1 = new Order(customer.getId(), itemGroups);
         Order order2 = new Order(customer.getId(), itemGroups);

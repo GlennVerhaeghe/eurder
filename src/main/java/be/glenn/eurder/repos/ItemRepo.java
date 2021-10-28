@@ -4,6 +4,7 @@ import be.glenn.eurder.domain.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,6 +16,7 @@ public class ItemRepo {
     @Autowired
     public ItemRepo() {
         this.repo = new ConcurrentHashMap<>();
+        repo.put("123", new Item("123", "Name", "Desc", 10.0, 100));
     }
 
     public Item add(Item item) {
@@ -31,4 +33,8 @@ public class ItemRepo {
     }
 
     public boolean containsKey(String itemId) { return repo.containsKey(itemId);}
+
+    public List<Item> getAllItems() {
+        return repo.values().stream().toList();
+    }
 }
