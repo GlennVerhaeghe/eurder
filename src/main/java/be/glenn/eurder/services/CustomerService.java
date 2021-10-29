@@ -43,7 +43,7 @@ public class CustomerService {
         return new ArrayList<>(mapper.customerListToCustomerDtoList(repo.getAllCustomers()));
     }
 
-    public Customer getCustomer(String customerId, String validationId) {
+    public CustomerDto getCustomer(String customerId, String validationId) {
         if(!AdminValidator.isAdmin(validationId)) {
             throw new AuthorisationException("Only the admin can view the details of a customer");
         }
@@ -53,6 +53,6 @@ public class CustomerService {
         if (!repo.getRepo().containsKey(customerId)) {
             throw new IllegalArgumentException("No customer with that ID is registered");
         }
-        return repo.get(customerId);
+        return mapper.customerToDto(repo.get(customerId));
     }
 }

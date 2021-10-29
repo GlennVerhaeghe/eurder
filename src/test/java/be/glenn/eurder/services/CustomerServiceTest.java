@@ -135,7 +135,7 @@ class CustomerServiceTest {
             //when
             repo.add(customer);
             //then
-            assertEquals(customer, service.getCustomer(customer.getId(), "666"));
+            assertEquals(mapper.customerToDto(customer), service.getCustomer(customer.getId(), "666"));
         }
     }
 }

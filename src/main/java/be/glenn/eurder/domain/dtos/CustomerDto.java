@@ -2,6 +2,8 @@ package be.glenn.eurder.domain.dtos;
 
 import be.glenn.eurder.domain.Address;
 
+import java.util.Objects;
+
 public class CustomerDto {
 
     private final String id;
@@ -42,5 +44,18 @@ public class CustomerDto {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomerDto that = (CustomerDto) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
