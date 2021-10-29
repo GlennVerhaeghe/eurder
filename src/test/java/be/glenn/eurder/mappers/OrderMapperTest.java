@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OrderMapperTest {
 
-    private final OrderMapper mapper = new OrderMapper();
+    private final OrderMapper mapper = new OrderMapper(new ItemGroupMapper());
     private final Address address = new Address("Street", "25", "1000", "Bxl");
     private final Customer customer = new Customer().setFirstName("A")
             .setLastName("B")

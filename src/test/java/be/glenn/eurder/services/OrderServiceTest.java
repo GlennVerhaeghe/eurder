@@ -39,11 +39,11 @@ class OrderServiceTest {
 
     @BeforeEach
     void setup() {
-        mapper = new OrderMapper();
+        itemGroupMapper = new ItemGroupMapper();
+        mapper = new OrderMapper(itemGroupMapper);
         orderRepo = new OrderRepo();
         customerRepo = new CustomerRepo();
         itemRepo = new ItemRepo();
-        itemGroupMapper = new ItemGroupMapper();
 
         service = new OrderService(orderRepo, customerRepo, itemRepo, mapper, itemGroupMapper);
         address = new Address("Street", "25", "1000", "Bxl");

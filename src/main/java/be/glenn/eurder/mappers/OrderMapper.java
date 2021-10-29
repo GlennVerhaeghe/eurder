@@ -3,6 +3,7 @@ package be.glenn.eurder.mappers;
 import be.glenn.eurder.domain.Order;
 import be.glenn.eurder.domain.dtos.CreateOrderDto;
 import be.glenn.eurder.domain.dtos.OrderDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,12 @@ import java.util.List;
 @Service
 public class OrderMapper {
 
-    private final ItemGroupMapper itemGroupMapper = new ItemGroupMapper();
+    private final ItemGroupMapper itemGroupMapper;
+
+    @Autowired
+    public OrderMapper(ItemGroupMapper itemGroupMapper) {
+        this.itemGroupMapper = itemGroupMapper;
+    }
 
     public Order createOrderDtoToOrder(CreateOrderDto dto) {
         return new Order(dto.getCustomerId(), itemGroupMapper.createDtoListToItemGroupList(dto.getOrderedItems()));

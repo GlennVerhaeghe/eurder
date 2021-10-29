@@ -1,6 +1,5 @@
 package be.glenn.eurder.services;
 
-import be.glenn.eurder.domain.Customer;
 import be.glenn.eurder.domain.dtos.CreateCustomerDto;
 import be.glenn.eurder.domain.dtos.CustomerDto;
 import be.glenn.eurder.exceptions.AuthorisationException;
