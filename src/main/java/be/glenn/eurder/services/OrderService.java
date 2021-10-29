@@ -3,6 +3,7 @@ package be.glenn.eurder.services;
 import be.glenn.eurder.domain.*;
 import be.glenn.eurder.domain.dtos.CreateItemGroupDto;
 import be.glenn.eurder.domain.dtos.CreateOrderDto;
+import be.glenn.eurder.domain.dtos.OrderDto;
 import be.glenn.eurder.mappers.ItemGroupMapper;
 import be.glenn.eurder.mappers.OrderMapper;
 import be.glenn.eurder.repos.CustomerRepo;
@@ -31,7 +32,7 @@ public class OrderService {
         this.itemGroupMapper = itemGroupMapper;
     }
 
-    public Order createOrder(CreateOrderDto dto) {
+    public OrderDto createOrder(CreateOrderDto dto) {
         if (!dto.allInputIsValid()) {
             throw new IllegalArgumentException("Not all required input to create an order is given");
         }
@@ -45,7 +46,7 @@ public class OrderService {
         calculateAndSetTotalPriceForItemGroups(order);
         calculateAndSetTotalPriceForOrder(order);
         calculateAndSetShippingDates(order);
-        return orderRepo.add(order);
+        return orderMapper.orderToOrderDto(orderRepo.add(order));
     }
 
     private void calculateAndSetTotalPriceForOrder(Order order) {
@@ -68,7 +69,7 @@ public class OrderService {
                         itemGroup.setShippingDate(itemGroup.getAmount() <= itemRepo.get(itemGroup.getItemId()).getAmount() ? LocalDate.now().plusDays(1) : LocalDate.now().plusDays(7)));
     }
 
-    public Order reOrder(String orderId) {
+    public OrderDto reOrder(String orderId) {
         Order order = orderRepo.get(orderId);
         CreateOrderDto newOrder = new CreateOrderDto(order.getCustomerId(), itemGroupMapper.itemGroupListToCreateItemGroupDtoList(order.getOrderedItems()));
         return createOrder(newOrder);

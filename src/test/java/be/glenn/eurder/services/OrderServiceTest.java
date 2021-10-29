@@ -4,6 +4,7 @@ import be.glenn.eurder.domain.*;
 import be.glenn.eurder.domain.dtos.CreateItemGroupDto;
 import be.glenn.eurder.domain.dtos.CreateOrderDto;
 import be.glenn.eurder.domain.dtos.ItemDto;
+import be.glenn.eurder.domain.dtos.OrderDto;
 import be.glenn.eurder.mappers.ItemGroupMapper;
 import be.glenn.eurder.mappers.OrderMapper;
 import be.glenn.eurder.repos.CustomerRepo;
@@ -66,9 +67,9 @@ class OrderServiceTest {
             //when
             itemRepo.add(item);
             customerRepo.add(customer);
-            Order order = service.createOrder(createOrderDto);
+            OrderDto dto = service.createOrder(createOrderDto);
             //then
-            assertTrue(orderRepo.contains(order));
+            assertNotNull(orderRepo.get(dto.getId()));
         }
 
         @Test
@@ -94,9 +95,9 @@ class OrderServiceTest {
             //when
             itemRepo.add(item);
             customerRepo.add(customer);
-            Order order = service.createOrder(createOrderDto);
+            OrderDto dto = service.createOrder(createOrderDto);
             //then
-            assertEquals(LocalDate.now().plusDays(7), order.getOrderedItems().get(0).getShippingDate());
+            assertEquals(LocalDate.now().plusDays(7), dto.getOrderedItems().get(0).getShippingDate());
         }
 
         @Test
@@ -104,9 +105,9 @@ class OrderServiceTest {
             //when
             itemRepo.add(item);
             customerRepo.add(customer);
-            Order order = service.createOrder(createOrderDto);
+            OrderDto dto = service.createOrder(createOrderDto);
             //then
-            assertEquals(LocalDate.now().plusDays(1), order.getOrderedItems().get(0).getShippingDate());
+            assertEquals(LocalDate.now().plusDays(1), dto.getOrderedItems().get(0).getShippingDate());
         }
     }
 }
