@@ -29,7 +29,7 @@ public class CustomerController {
 
     @GetMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public List<Customer> getAllCustomers(@RequestHeader String validationId) {
+    public List<CustomerDto> getAllCustomers(@RequestHeader String validationId) {
         return customerService.getAllCustomers(validationId);
     }
     @GetMapping(produces = "application/json", path = "/{customerId}")

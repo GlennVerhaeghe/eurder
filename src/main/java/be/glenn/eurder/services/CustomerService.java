@@ -33,14 +33,14 @@ public class CustomerService {
         throw new IllegalArgumentException("Not all necessary information to create a new customer was provided");
     }
 
-    public List<Customer> getAllCustomers(String id) {
+    public List<CustomerDto> getAllCustomers(String id) {
         if (!AdminValidator.isAdmin(id)) {
             throw new AuthorisationException("Only the admin can view customer details");
         }
         if(repo.getRepo().size() == 0) {
             throw new EmptyCollectionException("We don't have any customers yet");
         }
-        return new ArrayList<>(repo.getRepo().values());
+        return new ArrayList<>(mapper.customerListToCustomerDtoList(repo.getAllCustomers()));
     }
 
     public Customer getCustomer(String customerId, String validationId) {
