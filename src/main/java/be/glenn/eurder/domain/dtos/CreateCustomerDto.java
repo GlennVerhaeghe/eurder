@@ -42,8 +42,13 @@ public class CreateCustomerDto {
         return firstName != null
                 && lastName != null
                 && email != null
+                && emailIsValid()
                 && address != null
                 && address.allInputIsValid()
                 && phoneNumber != null;
+    }
+
+    public boolean emailIsValid() {
+        return email.contains("@");
     }
 }
