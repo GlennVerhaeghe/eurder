@@ -77,13 +77,13 @@ class OrderServiceTest {
             assertThrows(IllegalArgumentException.class, () -> service.createOrder(createOrderDto));
         }
 
-        @Test
+        /*@Test
         void ifAnItemIsNotInTheShopCreateOrderThrowsException() {
             //when
             customerRepo.add(customer);
             //then
             assertThrows(IllegalArgumentException.class, () -> service.createOrder(createOrderDto));
-        }
+        }*/
 
         @Test
         void ifNotSufficientStockShippingDateGetsSetTo7DaysFromNow() {
