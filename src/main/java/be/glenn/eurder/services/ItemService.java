@@ -2,6 +2,7 @@ package be.glenn.eurder.services;
 
 import be.glenn.eurder.domain.Item;
 import be.glenn.eurder.domain.dtos.CreateItemDto;
+import be.glenn.eurder.domain.dtos.ItemDto;
 import be.glenn.eurder.domain.dtos.UpdateItemDto;
 import be.glenn.eurder.exceptions.AuthorisationException;
 import be.glenn.eurder.mappers.ItemMapper;
@@ -21,7 +22,7 @@ public class ItemService {
         this.mapper = mapper;
     }
 
-    public Item createItem(CreateItemDto dto, String id) {
+    public ItemDto createItem(CreateItemDto dto, String id) {
         if (!AdminValidator.isAdmin(id)) {
             throw new AuthorisationException("A user without admin rights tried to add an item");
         }
@@ -29,7 +30,7 @@ public class ItemService {
             throw new IllegalArgumentException("Not all necessary information to create a new item was provided");
         }
 
-        return repo.add(mapper.createDtoToItem(dto));
+        return mapper.itemToDto(repo.add(mapper.createDtoToItem(dto)));
     }
 
     public Item updateItem(UpdateItemDto dto, String id) {

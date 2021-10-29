@@ -35,7 +35,7 @@ class ItemServiceTest {
             //given
             CreateItemDto dto = new CreateItemDto("A", "B", 10, 5);
             //when
-            Item item = service.createItem(dto, "666");
+            Item item = mapper.dtoToItem(service.createItem(dto, "666"));
             //then
             assertTrue(repo.contains(item));
         }
