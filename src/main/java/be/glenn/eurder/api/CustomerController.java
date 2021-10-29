@@ -2,6 +2,7 @@ package be.glenn.eurder.api;
 
 import be.glenn.eurder.domain.Customer;
 import be.glenn.eurder.domain.dtos.CreateCustomerDto;
+import be.glenn.eurder.domain.dtos.CustomerDto;
 import be.glenn.eurder.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class CustomerController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer createCustomer(@RequestBody CreateCustomerDto dto) {
+    public CustomerDto createCustomer(@RequestBody CreateCustomerDto dto) {
         return customerService.createCustomer(dto);
     }
 

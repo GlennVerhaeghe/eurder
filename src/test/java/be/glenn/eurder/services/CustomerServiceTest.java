@@ -37,7 +37,7 @@ class CustomerServiceTest {
             CreateCustomerDto dto = new CreateCustomerDto("Tom", "Hanks", "forrest@gump.com",
                     new Address("SomeStreet", "25", "45896", "SomeCity"), "123456789");
             //when
-            Customer customer = service.createCustomer(dto);
+            Customer customer = repo.get(service.createCustomer(dto).getId());
             //then
             assertTrue(repo.contains(customer));
         }

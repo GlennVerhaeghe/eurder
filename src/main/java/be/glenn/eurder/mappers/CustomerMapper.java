@@ -17,11 +17,20 @@ public class CustomerMapper {
     }
 
     public CustomerDto customerToDto(Customer customer) {
-        return new CustomerDto(customer.getFirstName(),
+        return new CustomerDto(customer.getId(),
+                customer.getFirstName(),
                 customer.getLastName(),
                 customer.getEmail(),
                 customer.getAddress(),
                 customer.getPhoneNumber());
+    }
+
+    public Customer customerDtoToCustomer(CustomerDto dto) {
+        return new Customer().setFirstName(dto.getFirstName())
+                .setLastName(dto.getLastName())
+                .setEmail(dto.getEmail())
+                .setAddress(dto.getAddress())
+                .setPhoneNumber(dto.getPhoneNumber());
     }
 
     public CustomerDto createDtoToDto(CreateCustomerDto dto) {
