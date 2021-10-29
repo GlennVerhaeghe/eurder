@@ -3,6 +3,7 @@ package be.glenn.eurder.domain.dtos;
 import be.glenn.eurder.domain.ItemGroup;
 
 import java.util.List;
+import java.util.Objects;
 
 public class OrderDto {
 
@@ -32,5 +33,18 @@ public class OrderDto {
 
     public double getTotalPrice() {
         return totalPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDto orderDto = (OrderDto) o;
+        return Objects.equals(id, orderDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

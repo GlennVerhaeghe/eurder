@@ -14,6 +14,7 @@ public class Order {
         this.id = UUID.randomUUID().toString();
         this.customerId = customerId;
         this.orderedItems = orderedItems;
+        this.totalPrice = calculateTotalPrice();
     }
 
     public boolean allInputIsValid() {

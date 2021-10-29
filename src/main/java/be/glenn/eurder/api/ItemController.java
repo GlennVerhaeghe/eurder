@@ -1,6 +1,5 @@
 package be.glenn.eurder.api;
 
-import be.glenn.eurder.domain.Item;
 import be.glenn.eurder.domain.dtos.CreateItemDto;
 import be.glenn.eurder.domain.dtos.ItemDto;
 import be.glenn.eurder.services.ItemService;

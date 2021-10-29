@@ -38,4 +38,8 @@ public class OrderRepo {
     public Order get(String orderId) {
         return repo.get(orderId);
     }
+
+    public List<Order> getOrdersByCustomer(String customerId) {
+        return repo.values().stream().filter(order -> order.getCustomerId().equals(customerId)).toList();
+    }
 }

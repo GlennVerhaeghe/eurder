@@ -4,6 +4,7 @@ import be.glenn.eurder.domain.*;
 import be.glenn.eurder.domain.dtos.CreateItemGroupDto;
 import be.glenn.eurder.domain.dtos.CreateOrderDto;
 import be.glenn.eurder.domain.dtos.OrderDto;
+import be.glenn.eurder.exceptions.AuthorisationException;
 import be.glenn.eurder.mappers.ItemGroupMapper;
 import be.glenn.eurder.mappers.OrderMapper;
 import be.glenn.eurder.repos.CustomerRepo;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -73,5 +75,13 @@ public class OrderService {
         Order order = orderRepo.get(orderId);
         CreateOrderDto newOrder = new CreateOrderDto(order.getCustomerId(), itemGroupMapper.itemGroupListToCreateItemGroupDtoList(order.getOrderedItems()));
         return createOrder(newOrder);
+    }
+
+    public List<OrderDto> getAllOrders(String adminId) {
+        if (!AdminValidator.isAdmin(adminId)) {
+            throw new AuthorisationException("A user without admin rights tried to add an item");
+        }
+
+        return orderMapper.orderListToOrderDtoList(orderRepo.getAllOrders());
     }
 }

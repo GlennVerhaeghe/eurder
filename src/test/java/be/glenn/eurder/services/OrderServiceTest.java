@@ -110,4 +110,20 @@ class OrderServiceTest {
             assertEquals(LocalDate.now().plusDays(1), dto.getOrderedItems().get(0).getShippingDate());
         }
     }
+
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @Nested
+    class ReOrderTesting {
+        @Test
+        void reOrder() {
+            //given
+            itemRepo.add(item);
+            customerRepo.add(customer);
+            OrderDto dto = service.createOrder(createOrderDto);
+            //when
+            OrderDto res = service.reOrder(dto.getId());
+            //then
+            assertNotNull(orderRepo.get(res.getId()));
+        }
+    }
 }

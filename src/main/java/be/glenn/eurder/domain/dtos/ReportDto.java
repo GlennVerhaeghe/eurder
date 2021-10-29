@@ -1,31 +1,24 @@
 package be.glenn.eurder.domain.dtos;
 
-import be.glenn.eurder.domain.Order;
-
-import java.util.Map;
+import java.util.List;
 
 public class ReportDto {
 
-    private final Map<String, Order> orders;
+    private final List<OrderDto> orders;
     private final double totalPrice;
 
-        public ReportDto(Map<String, Order> orders) {
+    public ReportDto(List<OrderDto> orders) {
         this.orders = orders;
         this.totalPrice = calculateTotalPrice();
     }
 
     private double calculateTotalPrice() {
-        return orders.values().stream()
-                .mapToDouble(Order::getTotalPrice)
+        return orders.stream()
+                .mapToDouble(OrderDto::getTotalPrice)
                 .sum();
     }
 
-    public ReportDto addItemGroup(Order order) {
-        orders.put(order.getId(), order);
-        return this;
-    }
-
-    public Map<String, Order> getOrders() {
+    public List<OrderDto> getOrders() {
         return orders;
     }
 

@@ -5,6 +5,8 @@ import be.glenn.eurder.domain.dtos.CreateOrderDto;
 import be.glenn.eurder.domain.dtos.OrderDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderMapper {
 
@@ -20,5 +22,9 @@ public class OrderMapper {
 
     public OrderDto orderToOrderDto(Order order) {
         return new OrderDto(order.getId(), order.getCustomerId(), order.getOrderedItems(), order.getTotalPrice());
+    }
+
+    public List<OrderDto> orderListToOrderDtoList(List<Order> list) {
+        return list.stream().map(this::orderToOrderDto).toList();
     }
 }
